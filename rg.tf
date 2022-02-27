@@ -2,9 +2,9 @@ provider "azurerm" {
   features {}
 
 }
-resource "azurerm_public_ip" "example" {
-  name                = "mypip"
-  resource_group_name = "myrg"
+resource "azurerm_resource_group" "example" {
+  name     = "example"
+  location = "eastus"
 }
 
 resource "azurerm_virtual_network" "example" {
