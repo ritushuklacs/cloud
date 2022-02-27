@@ -2,7 +2,7 @@ provider "azurerm" {
   features {}
 
 }
-data "azurerm_public_ip" "example" {
+resource "azurerm_public_ip" "example" {
   name                = "mypip"
   resource_group_name = "myrg"
 }
