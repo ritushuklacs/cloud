@@ -10,8 +10,8 @@ resource "azurerm_resource_group" "example" {
 resource "azurerm_virtual_network" "example" {
   name                = "example-vnet"
   address_space       = ["10.0.0.0/16"]
-  location            = data.azurerm_public_ip.example.location
-  resource_group_name = data.azurerm_public_ip.example.resource_group_name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 }
 
 resource "azurerm_subnet" "example" {
@@ -23,20 +23,20 @@ resource "azurerm_subnet" "example" {
 
 resource "azurerm_network_interface" "example" {
   name                = "example-nic"
-  location            = data.azurerm_public_ip.example.location
-  resource_group_name = data.azurerm_public_ip.example.resource_group_name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.example.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = data.azurerm_public_ip.example.id
+    public_ip_address= azurerm_network_interface.example.id
   }
 }
 resource "azurerm_windows_virtual_machine" "example" {
   name                = "example-machine"
-  resource_group_name = data.azurerm_public_ip.example.resource_group_name
-  location            = data.azurerm_public_ip.example.location
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
   size                = "Standard_F2"
   admin_username      = "adminuser"
   admin_password      = "P@$$w0rd1234!"
